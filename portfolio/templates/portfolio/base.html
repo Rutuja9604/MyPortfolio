@@ -1,0 +1,327 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rutuja Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
+
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <style>
+        /* FORCE SCROLL FIX */
+        html, body {
+            height: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #020617, #0f172a);
+            color: white;
+        }
+        body {
+            padding-top: 65px;
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #020617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #1e293b;
+            border-top: 5px solid #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+       /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 65px;
+            background: rgba(2,6,23,0.92);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+            z-index: 9999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        .nav-left {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        /* LINKS */
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        /* underline hover */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0%;
+            height: 2px;
+            background: #38bdf8;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        /* HAMBURGER */
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #38bdf8;
+        }
+
+        /* THEME TOGGLE */
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.4rem;
+            margin-left: 15px;
+            transition: 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.2);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: rgba(2,6,23,0.97);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+                padding: 40px 0;
+                display: none;
+                animation: slideDown 0.4s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+            }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+
+        /* PAGE CONTAINER */
+        .container {
+            padding-top: 90px;
+            min-height: 100vh;
+            animation: fadePage 0.6s ease;
+        }
+
+        @keyframes fadePage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LIGHT MODE */
+        body.light {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            color: #020617;
+        }
+
+        body.light .navbar {
+            background: rgba(255,255,255,0.95);
+        }
+
+        body.light .nav-links a {
+            color: #020617;
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #38bdf8;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, background 0.2s;
+            z-index: 10001;
+        }
+
+        /* SCROLL BAR */
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            background: linear-gradient(90deg, #38bdf8, #22d3ee);
+            z-index: 10002;
+        }
+    </style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+<div id="loader"><div class="spinner"></div></div>
+<div class="cursor"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-left">Rutuja</div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'skills' %}">Skills</a>
+        <a href="{% url 'education' %}">Education</a>
+        <a href="{% url 'projects' %}">Projects</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </div>
+
+    <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
+</nav>
+
+<div class="container" id="pageContent">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 1000, once: true });
+
+/* LOADER */
+window.addEventListener("load", () => {
+    document.getElementById("loader").style.display = "none";
+});
+
+/* MENU TOGGLE */
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("light-mode");
+
+    const btn = document.querySelector('.theme-toggle');
+    if (document.body.classList.contains("light-mode")) {
+        btn.innerHTML = "☀️";
+    } else {
+        btn.innerHTML = "🌙";
+    }
+}
+
+/* THEME TOGGLE */
+function toggleTheme() {
+    document.body.classList.toggle("light");
+
+    const icon = document.querySelector(".theme-toggle");
+    if (document.body.classList.contains("light")) {
+        icon.innerText = "☀️";
+        localStorage.setItem("theme", "light");
+    } else {
+        icon.innerText = "🌙";
+        localStorage.setItem("theme", "dark");
+    }
+}
+
+window.addEventListener("load", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+        document.body.classList.add("light");
+        document.querySelector(".theme-toggle").innerText = "☀️";
+    }
+});
+
+/* CUSTOM CURSOR */
+const cursor = document.querySelector(".cursor");
+document.addEventListener("mousemove", e => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
+
+/* SCROLL PROGRESS */
+window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById("scrollProgress").style.width = progress + "%";
+});
+</script>
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("navLinks");
+    if (menu.style.display === "flex") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "flex";
+    }
+}
+</script>
+
+
+</body>
+</html>

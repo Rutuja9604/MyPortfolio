@@ -1,0 +1,213 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+.education-wrapper {
+    padding: 100px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* TITLE */
+.education-title {
+    text-align: center;
+    font-size: 2.6rem;
+    color: #38bdf8;
+    margin-bottom: 60px;
+}
+
+/* TIMELINE */
+.edu-timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.edu-timeline::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(#38bdf8, #22d3ee);
+}
+
+.edu-item {
+    position: relative;
+    margin-bottom: 50px;
+    padding-left: 30px;
+}
+
+.edu-dot {
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    background: #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #38bdf8;
+}
+
+.edu-card {
+    background: rgba(2,6,23,0.85);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 0 30px rgba(56,189,248,0.2);
+    transition: 0.4s ease;
+}
+
+.edu-card:hover {
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 0 0 50px rgba(56,189,248,0.5);
+}
+
+.edu-degree {
+    font-size: 1.4rem;
+    color: #facc15;
+    margin-bottom: 5px;
+}
+
+.edu-institute {
+    color: #38bdf8;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.edu-year {
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    margin-bottom: 10px;
+}
+
+.edu-desc {
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    line-height: 1.6;
+}
+
+/* CERTIFICATIONS */
+.cert-section {
+    margin-top: 120px;
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.cert-card {
+    background: rgba(2,6,23,0.85);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(56,189,248,0.2);
+    transition: 0.4s ease;
+    text-align: center;
+}
+
+.cert-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 0 40px rgba(56,189,248,0.45);
+}
+
+.cert-card img {
+    width: 100%;
+    height: auto;               /* IMPORTANT */
+    max-height: 220px;          /* control size */
+    object-fit: contain;        /* IMPORTANT */
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background: #020617;
+    padding: 10px;
+}
+
+.cert-title {
+    font-size: 1.1rem;
+    color: #facc15;
+    margin-bottom: 5px;
+}
+
+.cert-issuer {
+    font-size: 0.9rem;
+    color: #38bdf8;
+    margin-bottom: 3px;
+}
+
+.cert-year {
+    font-size: 0.85rem;
+    color: #e5e7eb;
+}
+
+/* LOTTIE WRAPPER */
+.lottie-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+</style>
+
+<section class="education-wrapper">
+
+    <!-- PAGE TITLE -->
+    <h2 class="education-title" data-aos="fade-down">Education</h2>
+
+    <!-- TIMELINE -->
+    <div class="edu-timeline">
+
+        {% for edu in education_list %}
+        <div class="edu-item" data-aos="fade-left">
+            <div class="edu-dot"></div>
+
+            <div class="edu-card">
+                <div class="edu-degree">{{ edu.degree }}</div>
+                <div class="edu-institute">{{ edu.institute }}</div>
+                <div class="edu-year">{{ edu.year }}</div>
+                <div class="edu-desc">{{ edu.description }}</div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- LOTTIE ANIMATION -->
+    <div class="lottie-box" data-aos="zoom-in">
+        <lottie-player 
+            src="https://assets9.lottiefiles.com/packages/lf20_w51pcehl.json"
+            background="transparent"
+            speed="1"
+            style="width: 300px; height: 300px;"
+            loop
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <!-- CERTIFICATIONS SECTION -->
+    <div class="cert-section">
+
+        <h2 class="education-title" data-aos="fade-down">Certifications</h2>
+
+        <div class="cert-grid">
+
+            {% for cert in certifications %}
+            <div class="cert-card" data-aos="zoom-in">
+                {% if cert.image %}
+                    <img src="{{ cert.image.url }}" alt="{{ cert.title }}">
+                {% endif %}
+                <h3>{{ cert.title }}</h3>
+                <p>{{ cert.issuer }}</p>
+                <span>{{ cert.year }}</span>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

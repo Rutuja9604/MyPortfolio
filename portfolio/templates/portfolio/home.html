@@ -1,0 +1,216 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.hero-video {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero-video video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.overlay-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(2,6,23,0.6), rgba(2,6,23,0.9));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 120px 15px 60px;
+}
+
+.hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    color: #38bdf8;
+}
+
+.hero-subtitle {
+    color: #facc15;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+}
+
+.hero-content p {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: #e5e7eb;
+}
+
+.scroll-indicator {
+    margin-top: 40px;
+    text-align: center;
+    color: #38bdf8;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+.home-section {
+    padding: 80px 20px;
+    background: #020617;
+    text-align: center;
+}
+
+.feature-section {
+    padding: 100px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 0 30px rgba(56,189,248,0.15);
+    transition: 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(56,189,248,0.15), transparent);
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 0 40px rgba(56,189,248,0.4);
+}
+
+.feature-img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.feature-title {
+    font-size: 1.4rem;
+    color: #38bdf8;
+    margin-bottom: 10px;
+}
+
+.feature-text {
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+</style>
+
+<!-- HERO SECTION -->
+<div class="hero-video">
+    <video autoplay muted loop>
+        <source src="{% static 'portfolio/videos/hero.mp4' %}" type="video/mp4">
+    </video>
+
+    <div class="overlay-gradient"></div>
+
+    <div class="hero-content" data-aos="zoom-in">
+        <h1 class="hero-title">Hi, I'm Rutuja 👋</h1>
+        <h2 class="hero-subtitle">Python Full Stack Developer</h2>
+        <p>MCA student passionate about building modern web applications with clean UI & strong backend.</p>
+
+        <div class="scroll-indicator">↓ Scroll Down</div>
+    </div>
+</div>
+
+
+
+<!-- EXTRA CONTENT FOR SCROLL -->
+
+
+<!-- WHAT I DO -->
+<section class="feature-section" data-aos="fade-up">
+    <h2 class="section-title">What I Do</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card" data-aos="zoom-in">
+            <img src="{% static 'portfolio/images/coding.png' %}" class="feature-img" alt="Coding">
+            <h3 class="feature-title">Full Stack Development</h3>
+            <p class="feature-text">
+                I design and develop complete web applications using Python, Django, HTML, CSS and JavaScript
+                with clean architecture and strong backend logic.
+            </p>
+        </div>
+
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="150">
+            <img src="{% static 'portfolio/images/uiux.png' %}" class="feature-img" alt="UI UX">
+            <h3 class="feature-title">Modern UI/UX Design</h3>
+            <p class="feature-text">
+                I focus on building attractive, responsive and user-friendly interfaces
+                with smooth animations and interactive effects.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- WHY CHOOSE ME -->
+<section class="feature-section" data-aos="fade-up">
+    <h2 class="section-title">Why Choose Me</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card" data-aos="zoom-in">
+            <img src="{% static 'portfolio/images/performance.png' %}" class="feature-img" alt="Performance">
+            <h3 class="feature-title">Performance Focused</h3>
+            <p class="feature-text">
+                I write optimized, clean and maintainable code to ensure high performance,
+                fast load time and smooth user experience.
+            </p>
+        </div>
+
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="150">
+            <img src="{% static 'portfolio/images/learning.png' %}" class="feature-img" alt="Learning">
+            <h3 class="feature-title">Always Learning</h3>
+            <p class="feature-text">
+                I continuously upgrade my skills and explore new technologies to stay updated
+                with industry trends and best practices.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}

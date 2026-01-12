@@ -1,0 +1,127 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+
+<style>
+.projects-container {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.projects-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #38bdf8;
+    margin-bottom: 50px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.project-card {
+    background: #020617;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(56,189,248,0.15);
+    transition: 0.4s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 0 30px rgba(56,189,248,0.4);
+}
+
+.project-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-content {
+    padding: 20px;
+}
+
+.project-content h3 {
+    color: #facc15;
+    margin-bottom: 10px;
+}
+
+.tech {
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    margin-bottom: 8px;
+}
+
+.project-desc {
+    font-size: 0.95rem;
+    color: #cbd5f5;
+    margin-bottom: 15px;
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+}
+
+.project-links a {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.github-btn {
+    background: #1e293b;
+    color: #38bdf8;
+}
+
+.live-btn {
+    background: #38bdf8;
+    color: #020617;
+}
+
+.project-links a:hover {
+    opacity: 0.8;
+}
+</style>
+
+<div class="projects-container">
+    <h1 class="projects-title">My Projects 🚀</h1>
+
+    <div class="projects-grid">
+
+        {% for project in projects %}
+        <div class="project-card" data-aos="zoom-in">
+
+            <img src="{{ project.image.url }}" class="project-img" alt="{{ project.title }}">
+
+            <div class="project-content">
+                <h3>{{ project.title }}</h3>
+
+                <div class="tech">Frontend: {{ project.frontend }}</div>
+                <div class="tech">Backend: {{ project.backend }}</div>
+
+                <p class="project-desc">{{ project.description }}</p>
+
+                <div class="project-links">
+                    <a href="{{ project.github_link }}" target="_blank" class="github-btn">GitHub</a>
+
+                    {% if project.live_link %}
+                    <a href="{{ project.live_link }}" target="_blank" class="live-btn">Live Demo</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
