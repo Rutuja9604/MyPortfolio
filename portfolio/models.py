@@ -1,9 +1,11 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
+
 
 class About(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    profile_image = models.ImageField(upload_to='profile/')
+    profile_image = CloudinaryField('profile_image', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -11,17 +13,16 @@ class About(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    icon = models.ImageField(upload_to='skills/')
+    icon = CloudinaryField('icon', blank=True, null=True)
     level = models.PositiveIntegerField(help_text="Enter value between 0 to 100")
 
     def __str__(self):
         return self.name
 
 
-
 class Project(models.Model):
     title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='projects/')
+    image = CloudinaryField('project_image', blank=True, null=True)
     frontend = models.CharField(max_length=200)
     backend = models.CharField(max_length=200)
     description = models.TextField()
@@ -41,6 +42,7 @@ class Contact(models.Model):
     def __str__(self):
         return self.name
 
+
 class Education(models.Model):
     degree = models.CharField(max_length=200)
     institute = models.CharField(max_length=200)
@@ -50,12 +52,12 @@ class Education(models.Model):
     def __str__(self):
         return self.degree
 
-    
+
 class Certification(models.Model):
     title = models.CharField(max_length=200)
     issuer = models.CharField(max_length=150)
     year = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='certifications/', blank=True, null=True)
+    image = CloudinaryField('cert_image', blank=True, null=True)
 
     def __str__(self):
         return self.title
